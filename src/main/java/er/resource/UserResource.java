@@ -9,12 +9,6 @@ import jakarta.ws.rs.core.Response;
 @Consumes(MediaType.APPLICATION_JSON)
 public class UserResource {
 
-
-    @POST
-    public Response login () {
-        return Response.status(201).entity("loggedin").build();
-    }
-
     @POST
     public Response register () {
         return Response.status(201).entity("created").build();
@@ -43,8 +37,4 @@ public class UserResource {
         return Response.status(204).entity(" Deleted").build();
     }
 
-    @POST
-    public Response logout () {
-        return Response.status(201).entity("logout").build();
-    }
 }

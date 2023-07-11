@@ -8,6 +8,8 @@ import lombok.Data;
 @Entity
 @Data
 public class Category {
-    @Id @GeneratedValue long id;
+    @Id
+    @GeneratedValue
+    long id;
     private String name;
 }
