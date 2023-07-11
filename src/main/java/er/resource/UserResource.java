@@ -1,6 +1,5 @@
 package er.resource;
 
-import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -10,27 +9,42 @@ import jakarta.ws.rs.core.Response;
 @Consumes(MediaType.APPLICATION_JSON)
 public class UserResource {
 
+
     @POST
-    public Response create(){
+    public Response login () {
+        return Response.status(201).entity("loggedin").build();
+    }
+
+    @POST
+    public Response register () {
         return Response.status(201).entity("created").build();
     }
+
     @GET
-    public Response get(){
+    public Response get () {
         return Response.status(200).entity("List").build();
     }
+
     @GET
     @Path("{id}")
-    public Response getById(@PathParam("id") long id){
+    public Response getById (@PathParam("id") long id) {
         return Response.status(200).entity("Single").build();
     }
+
     @PUT
     @Path("{id}")
-    public Response update(@PathParam("id") long id){
+    public Response update (@PathParam("id") long id) {
         return Response.status(204).entity(" updated").build();
     }
+
     @DELETE
     @Path("{id}")
-    public Response delete(@PathParam("id") long id){
+    public Response delete (@PathParam("id") long id) {
         return Response.status(204).entity(" Deleted").build();
+    }
+
+    @POST
+    public Response logout () {
+        return Response.status(201).entity("logout").build();
     }
 }
