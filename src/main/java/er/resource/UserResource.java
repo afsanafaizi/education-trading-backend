@@ -1,40 +1,38 @@
 package er.resource;
 
+import er.dto.UserDTO;
+import er.service.UserService;
+import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-@Path("users")
+@Path("/users")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class UserResource {
 
+    @Inject
+    UserService userService;
+
     @POST
-    public Response register () {
-        return Response.status(201).entity("created").build();
+    @Transactional
+    public Response addUser (UserDTO user) {
+        UserDTO savedUser = userService.createUser(user);
+        return Response.ok(savedUser).build();
     }
 
     @GET
-    public Response get () {
-        return Response.status(200).entity("List").build();
+    @Path("/{id}")
+    public Response getUser (@PathParam("id") Long id) {
+        UserDTO user = userService.getUserById(id);
+        if (user != null) {
+            return Response.ok(user).build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
     }
 
-    @GET
-    @Path("{id}")
-    public Response getById (@PathParam("id") long id) {
-        return Response.status(200).entity("Single").build();
-    }
-
-    @PUT
-    @Path("{id}")
-    public Response update (@PathParam("id") long id) {
-        return Response.status(204).entity(" updated").build();
-    }
-
-    @DELETE
-    @Path("{id}")
-    public Response delete (@PathParam("id") long id) {
-        return Response.status(204).entity(" Deleted").build();
-    }
-
+    // Add other user-related endpoints as needed.
 }

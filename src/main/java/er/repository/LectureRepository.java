@@ -1,8 +1,8 @@
 package er.repository;
 
-import er.model.User;
+import er.model.Lecture;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
-public class UserRepository implements PanacheRepository<User> {}
+public class LectureRepository implements PanacheRepository<Lecture> {}
