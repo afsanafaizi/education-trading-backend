@@ -7,6 +7,7 @@ import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import java.util.List;
 
 @Path("/users")
 @Produces(MediaType.APPLICATION_JSON)
@@ -33,6 +34,20 @@ public class UserResource {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
+
+    @GET
+    public Response getAll () {
+        List<UserDTO> user = userService.getAllUsers();
+        return Response.ok(user).build();
+    }
+
+    @DELETE
+    @Path("{id}")
+    public Response deleteUser (long id) {
+        userService.delete(id);
+        return Response.ok("user deleted").build();
+    }
+
 
     // Add other user-related endpoints as needed.
 }

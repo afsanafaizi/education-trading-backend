@@ -37,18 +37,36 @@ public class CourseService {
     }
 
     @Transactional
-    public List<CourseDTO> getAllCourses() {
+    public List<CourseDTO> getAllCourses () {
         List<Course> courses = courseRepository.listAll();
-        return courses.stream()
-                      .map(this::convertToCourseDTO)
-                      .collect(Collectors.toList());
+        return courses.stream().map(this::convertToCourseDTO).collect(Collectors.toList());
     }
 
-    private CourseDTO convertToCourseDTO(Course course) {
+    @Transactional
+    public CourseDTO updateCourse (Long id, CourseDTO updatedCourseDTO) {
+        Course course = courseRepository.findById(id);
+        if (course != null) {
+            course.setName(updatedCourseDTO.getName());
+
+            courseRepository.persist(course);
+
+            return convertToCourseDTO(course);
+        }
+        return null;
+    }
+
+    @Transactional
+    public void deleteCourse (Long id) {
+        Course course = courseRepository.findById(id);
+        if (course != null) {
+            courseRepository.delete(course);
+        }
+    }
+
+    private CourseDTO convertToCourseDTO (Course course) {
         CourseDTO courseDTO = new CourseDTO();
         courseDTO.setId(course.getId());
         courseDTO.setName(course.getName());
         return courseDTO;
     }
-
 }
