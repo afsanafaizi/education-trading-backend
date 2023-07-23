@@ -6,6 +6,7 @@ import er.repository.UserRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,7 +17,7 @@ public class UserService {
     UserRepository userRepository;
 
     @Transactional
-    public UserDTO createUser (UserDTO userDTO) {
+    public UserDTO createUser(UserDTO userDTO) {
         User user = new User();
         user.setFirstName(userDTO.getFirstName());
         user.setLastName(userDTO.getLastName());
@@ -32,7 +33,7 @@ public class UserService {
     }
 
     @Transactional
-    public UserDTO getUserById (Long id) {
+    public UserDTO getUserById(Long id) {
         User user = userRepository.findById(id);
         if (user != null) {
             return convertToUserDTO(user);
@@ -41,17 +42,17 @@ public class UserService {
     }
 
     @Transactional
-    public List<UserDTO> getAllUsers () {
+    public List<UserDTO> getAllUsers() {
         List<User> users = userRepository.listAll();
         return users.stream().map(this::convertToUserDTO).collect(Collectors.toList());
     }
 
     @Transactional
-    public void delete (long id) {
+    public void delete(long id) {
         userRepository.deleteById(id);
     }
 
-    private UserDTO convertToUserDTO (User user) {
+    private UserDTO convertToUserDTO(User user) {
         UserDTO userDTO = new UserDTO();
         userDTO.setId(user.getId());
         userDTO.setFirstName(user.getFirstName());

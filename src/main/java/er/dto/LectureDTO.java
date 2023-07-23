@@ -1,6 +1,7 @@
 package er.dto;
 
 import lombok.Data;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +9,7 @@ import java.util.List;
 public class LectureDTO {
     private long id;
     private String name;
-    private List<VideoDTO> videos = new ArrayList<>();
+    //    private List<VideoDTO> videos = new ArrayList<>();
     private long courseId;
 
     // Constructors, getters, setters, etc.
@@ -19,7 +20,7 @@ public class LectureDTO {
     public LectureDTO(long id, String name, List<VideoDTO> videos, long courseId) {
         this.id = id;
         this.name = name;
-        this.videos = videos;
+//        this.videos = videos;
         this.courseId = courseId;
     }
 

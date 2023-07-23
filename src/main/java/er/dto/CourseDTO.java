@@ -6,6 +6,5 @@ import lombok.Data;
 public class CourseDTO {
     private long id;
     private String name;
-
-    // Constructors, getters, setters, etc.
+    private String title;
 }

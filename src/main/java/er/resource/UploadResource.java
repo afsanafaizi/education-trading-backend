@@ -11,6 +11,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -78,6 +79,7 @@ public class UploadResource {
 //        String fullPath = folder + File.separator + fileName;
         return Response.accepted().entity(url).build();
     }
+
     private File createDirectoryIfNotExists(String parentDirName, String childDirName) {
         File parentDir = new File(parentDirName);
         if (!parentDir.exists()) {

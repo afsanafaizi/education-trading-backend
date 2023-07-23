@@ -7,7 +7,7 @@ public class FormData {
     @RestForm("file")
     private FileUpload file;
 
-    public FileUpload getFile () {
+    public FileUpload getFile() {
         return file;
     }
 }

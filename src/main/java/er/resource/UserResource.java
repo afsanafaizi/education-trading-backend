@@ -7,6 +7,7 @@ import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+
 import java.util.List;
 
 @Path("/users")
@@ -19,14 +20,14 @@ public class UserResource {
 
     @POST
     @Transactional
-    public Response addUser (UserDTO user) {
+    public Response addUser(UserDTO user) {
         UserDTO savedUser = userService.createUser(user);
         return Response.ok(savedUser).build();
     }
 
     @GET
     @Path("/{id}")
-    public Response getUser (@PathParam("id") Long id) {
+    public Response getUser(@PathParam("id") Long id) {
         UserDTO user = userService.getUserById(id);
         if (user != null) {
             return Response.ok(user).build();
@@ -36,14 +37,14 @@ public class UserResource {
     }
 
     @GET
-    public Response getAll () {
+    public Response getAll() {
         List<UserDTO> user = userService.getAllUsers();
         return Response.ok(user).build();
     }
 
     @DELETE
     @Path("{id}")
-    public Response deleteUser (long id) {
+    public Response deleteUser(long id) {
         userService.delete(id);
         return Response.ok("user deleted").build();
     }
