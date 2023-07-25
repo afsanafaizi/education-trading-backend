@@ -1,7 +1,6 @@
 package er.resource;
 
-import er.dto.CourseDTO;
-import er.dto.EnrollRequest;
+import er.dto.EnrolledCourseDTO;
 import er.dto.UserDTO;
 import er.service.EnrollmentService;
 import jakarta.inject.Inject;
@@ -39,4 +38,22 @@ public class EnrollmentResource {
         List<UserDTO> enrolledUsers = enrollmentService.getAllEnrolledUsersInCourse(courseId);
         return Response.ok(enrolledUsers).build();
     }
+
+    @PATCH
+    @Path("/update/{enrollmentId}/percentage/{completionPercentage}/{userId}")
+    public Response updateEnrollmentStatusAndPercentage(
+            @PathParam("enrollmentId") long enrollmentId,
+            @PathParam("completionPercentage") int completionPercentage,
+            @PathParam("userId") long userId) {
+        enrollmentService.updateEnrollmentStatusAndPercentage(enrollmentId, completionPercentage,userId);
+        return Response.ok().build();
+    }
+
+    @GET
+    @Path("/enrolled/courses/{userId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<EnrolledCourseDTO> getAllEnrolledCourses(@PathParam("userId") long userId) {
+        return enrollmentService.getAllEnrolledCoursesByUser(userId);
+    }
+
 }

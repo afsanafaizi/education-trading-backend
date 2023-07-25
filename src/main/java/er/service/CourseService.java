@@ -135,6 +135,8 @@ public class CourseService {
         CourseDTO courseDTO = new CourseDTO();
         courseDTO.setId(course.getId());
         courseDTO.setName(course.getName());
+        courseDTO.setTitle(course.getTitle());
+        courseDTO.setPhoto(course.getPhoto());
         return courseDTO;
     }
 

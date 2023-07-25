@@ -1,6 +1,7 @@
 package er.service;
 
 import er.dto.CourseDTO;
+import er.dto.EnrolledCourseDTO;
 import er.dto.EnrollmentDTO;
 import er.dto.UserDTO;
 import er.model.Course;
@@ -17,6 +18,7 @@ import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.Response;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class EnrollmentService {
@@ -80,6 +82,31 @@ public class EnrollmentService {
         List<UserDTO> enrolledUsers = enrollmentRepository.findEnrolledUsersByCourse(courseId);
         return enrolledUsers;
     }
+    @Transactional
+    public void updateEnrollmentStatusAndPercentage(long enrollmentId, int completionPercentage, long userId) {
+        Enrollment enrollment = enrollmentRepository.find("id = ?1 and user.id =?2",enrollmentId,userId).firstResult();
+        if (enrollment == null) {
+            throw new NotFoundException("Enrollment not found");
+        }
+        enrollment.setCompletionPercentage(completionPercentage);
+        enrollmentRepository.getEntityManager().merge(enrollment);
+    }
 
+    public List<EnrolledCourseDTO> getAllEnrolledCoursesByUser(long userId) {
+        return enrollmentRepository.find("user.id", userId).stream()
+                .map(this::convertToEnrolledCourseDTO)
+                .collect(Collectors.toList());
+    }
+    private EnrolledCourseDTO convertToEnrolledCourseDTO(Enrollment enrollment) {
+        EnrolledCourseDTO enrolledCourseDTO = new EnrolledCourseDTO();
+        enrolledCourseDTO.setEnrollmentId(enrollment.getId());
+        enrolledCourseDTO.setCourseId(enrollment.getCourse().getId());
+        enrolledCourseDTO.setUserId(enrollment.getUser().getId());
+        enrolledCourseDTO.setName(enrollment.getCourse().getName());
+        enrolledCourseDTO.setTitle(enrollment.getCourse().getTitle());
+        enrolledCourseDTO.setPhoto(enrollment.getCourse().getPhoto());
+        enrolledCourseDTO.setCompletionPercentage(enrollment.getCompletionPercentage());
+        return enrolledCourseDTO;
+    }
 
 }

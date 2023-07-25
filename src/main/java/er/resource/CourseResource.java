@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.List;
 
 
-@Path("/courses")
+@Path("/course")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class CourseResource {
