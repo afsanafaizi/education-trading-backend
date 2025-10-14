@@ -1,0 +1,14 @@
+﻿apiVersion: tekton.dev/v1
+kind: Pipeline
+metadata:
+  name: ci-pipeline
+spec:
+  workspaces:
+    - name: shared-workspace
+  tasks:
+    - name: build
+      taskRef:
+        name: build-task
+      workspaces:
+        - name: source
+          workspace: shared-workspace

@@ -1,0 +1,11 @@
+﻿apiVersion: tekton.dev/v1
+kind: PipelineRun
+metadata:
+  name: ci-pipelinerun
+spec:
+  pipelineRef:
+    name: ci-pipeline
+  workspaces:
+    - name: shared-workspace
+      persistentVolumeClaim:
+        claimName: my-source-pvc
